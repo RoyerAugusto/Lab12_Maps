@@ -2,6 +2,7 @@ package com.example.lab12_maps
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -15,7 +16,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
+import com.google.android.gms.maps.model.JointType
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.RoundCap
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.Polygon
@@ -67,6 +70,12 @@ fun MapScreen() {
         LatLng(-16.399030, -71.536625),
         LatLng(-16.422985, -71.530970),
         LatLng(-16.432657, -71.509234)
+    )
+
+    val rutaYura = listOf(
+        ArequipaLocation,
+        LatLng(-16.3524187, -71.5675994),
+        LatLng(-16.2520984, -71.6836503)
     )
 
     LaunchedEffect(Unit) {
@@ -125,6 +134,26 @@ fun MapScreen() {
                 color = Color(0xFFFF9800),
                 width = 8f,
                 pattern = listOf(Dash(30f), Gap(20f))
+            )
+
+            Polyline(
+                points = rutaYura,
+                color = Color.Magenta,
+                width = 12f,
+                geodesic = true,
+                startCap = RoundCap(),
+                endCap = RoundCap(),
+                jointType = JointType.ROUND
+            )
+
+            Polyline(
+                points = listOf(plazaDeArmasPolygon[0], ArequipaLocation),
+                color = Color.Black,
+                width = 14f,
+                clickable = true,
+                onClick = {
+                    Toast.makeText(context, "Polilínea tocada", Toast.LENGTH_SHORT).show()
+                }
             )
         }
     }
